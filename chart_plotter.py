@@ -95,3 +95,22 @@ def plot_regional_daily_charts(list_dates, list_regions, daily_matrix, daily_con
         filename = list_regions[i] + ".png"
         fig.savefig(output_dir + file_prefix + filename)
         pl.close()
+
+# bar-plot the concentration of (positive cases)/(number of swabs) for each region
+def plot_regional_averages(list_regions, concentration_matrix, output_dir, file_prefix):
+    y_val = len(list_regions)
+    array_averages = [ el for el in numpy.average(concentration_matrix[:,:],1 ) ] 
+    map_averages = {}
+    for i in range(y_val):
+        map_averages.update({list_regions[i]:array_averages[i]})
+    
+    sorted_average_map = {k: v for k, v in sorted(map_averages.items(), key=lambda item: item[1])}
+    fig = pl.figure(figsize=(24,10))
+    cp = pl.subplot()
+    ax = pl.gca()
+
+    pl.bar(list(sorted_average_map.keys()), list(sorted_average_map.values()) )
+    pl.xticks(rotation=90)
+    ax.set_ylabel("% Positivi")
+
+    fig.savefig(output_dir + file_prefix + "media_regionale", bbox_inches='tight')
