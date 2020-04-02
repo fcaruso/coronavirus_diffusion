@@ -1,6 +1,7 @@
 import numpy
 
-# create a matrix and two map from dpcm-dpc json: 
+# create a matrix and two map from pcm-dpc json file:
+# (https://github.com/pcm-dpc/COVID-19)
 # matrix, x_map and y_map
 # x_map["year-month-day"] = index of the matrix column
 # y_map["region-name"] = index of the matrix row
