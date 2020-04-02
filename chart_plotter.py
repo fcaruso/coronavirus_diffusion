@@ -114,3 +114,4 @@ def plot_regional_averages(list_regions, concentration_matrix, output_dir, file_
     ax.set_ylabel("% Positivi")
 
     fig.savefig(output_dir + file_prefix + "media_regionale", bbox_inches='tight')
+    pl.close()
