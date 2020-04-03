@@ -68,3 +68,40 @@ def build_daily_matrix(matrix):
         
     return daily_matrix
 
+# in: concentration matrix [n_regions][n_ndays]
+# returns the array of the timeline of 
+# the column-wise sum of concentrations given a concentration matrix
+def build_sum_of_concentration_array( concentration_matrix):
+	[ n_rows, n_cols ] = concentration_matrix.shape
+	concentration_array = [ el for el in numpy.sum(concentration_matrix, 0)/ n_rows ]
+	return concentration_array
+
+# in: main matrix dimension [n_regions][n_days][3]
+# returns the array of the timeline of
+# the column-wise sum of the swabs given the main matrix
+def build_sum_of_swabs_array(matrix):
+	swabs_array = [ el for el in numpy.sum(matrix[:,:,0],0)]
+	return swabs_array
+
+# in: main matrix [n_regions][n_days][3]
+# returns the array of the timeline of
+# the column-wise sum of the positives
+def build_sum_of_positives_array(matrix):
+	positives_array = [ el for el in numpy.sum(matrix[:,:,1],0)]
+	return positives_array 
+
+# in: list of regions
+# in: concentration_matrix [n_regions][n_days]
+# returns the sorted map of regional concentration (positive cases)/(number of swabs)
+def build_regional_averages_map( list_regions, concentration_matrix):
+	y_val = len(list_regions)
+	array_averages = [ el for el in numpy.average(concentration_matrix[:,:],1 ) ] 
+	map_averages = {}
+	for i in range(y_val):
+		map_averages.update({list_regions[i]:array_averages[i]})
+	sorted_average_map = {k: v for k, v in sorted(map_averages.items(), key= lambda item: item[1]) }
+	return sorted_average_map
+
+
+
+
